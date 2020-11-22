@@ -3,10 +3,21 @@
 @import "tailwindcss/utilities";
 
 .btn {
-    @apply text-white; 
+    @apply text-white;
     @apply text-base;
     @apply p-2;
     @apply outline-white;
     @apply cursor-pointer;
     @apply rounded-md;
+}
+
+.input {
+    @apply ml-6;
+    @apply px-4;
+    @apply py-2;
+    @apply text-xl;
+    @apply rounded;
+    @apply border;
+    @apply border-solid;
+    @apply border-blue-800;
 }

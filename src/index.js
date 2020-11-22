@@ -1,4 +1,4 @@
-import './styles.scss'
+import './styles.scss';
 
 const alphabets = [
     'A',
@@ -53,41 +53,51 @@ const alphabets = [
     'x',
     'y',
     'z',
-]
+];
 
-const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const specialChars = ['*', '@', '&', '%', '#', '$', '!']
+const specialChars = ['*', '@', '&', '%', '#', '$', '!'];
 
 function generateRandomString(choices, length) {
-    let result = ''
+    let result = '';
     for (let index = 0; index < length; index += 1) {
-        result += choices[Math.floor(Math.random() * choices.length)]
+        result += choices[Math.floor(Math.random() * choices.length)];
     }
-    return result
+    return result;
 }
 
 document
     .getElementById('generatePassword')
     .addEventListener('click', function handler() {
-        const randomString = generateRandomString(
+        const length = document.getElementById('passwordLength').value;
+        document.getElementById('result').value = generateRandomString(
             [...alphabets, ...numbers, ...specialChars],
-            10
-        )
-        document.getElementById('result').value = randomString
-    })
+            Number.isNaN(length) ? 10 : length
+        );
+    });
 
 document
     .getElementById('copyToClipboard')
     .addEventListener('click', function handler() {
-        const result = document.getElementById('result')
-        result.select()
-        result.setSelectionRange(0, 99999)
-        document.execCommand('copy')
-        const clipboardBtn = document.getElementById('copyToClipboard')
-        const oldClipboardValue = clipboardBtn.innerHTML
-        clipboardBtn.innerHTML = 'Copied'
+        const result = document.getElementById('result');
+        result.select();
+        result.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        const clipboardBtn = document.getElementById('copyToClipboard');
+        const oldClipboardValue = clipboardBtn.innerHTML;
+        clipboardBtn.innerHTML = 'Copied';
         setTimeout(function resetClipboardName() {
-            clipboardBtn.innerHTML = oldClipboardValue
-        }, 2000)
-    })
+            clipboardBtn.innerHTML = oldClipboardValue;
+        }, 2000);
+    });
+
+document
+    .getElementById('passwordLength')
+    .addEventListener('change', function handler(event) {
+        const length = event.target.value;
+        document.getElementById('result').value = generateRandomString(
+            [...alphabets, ...numbers, ...specialChars],
+            Number.isNaN(length) ? 10 : length
+        );
+    });
