@@ -74,7 +74,7 @@ document
             [...alphabets, ...numbers, ...specialChars],
             10
         )
-        document.getElementById('result').innerHTML = randomString
+        document.getElementById('result').value = randomString
     })
 
 document
