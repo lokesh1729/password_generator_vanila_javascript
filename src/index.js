@@ -57,7 +57,7 @@ const alphabets = [
 
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const specialChars = ['*', '@', '&', '%', '#', '$', '!'];
+const symbols = ['*', '@', '&', '%', '#', '$', '!'];
 
 function generateRandomString(choices, length) {
     let result = '';
@@ -67,13 +67,42 @@ function generateRandomString(choices, length) {
     return result;
 }
 
+Math.shuffle = function shuffle(arr) {
+    const copyArr = [...arr];
+    for (let index = arr.length; index >= 0; index -= 1) {
+        const randomIdx = Math.floor(Math.random() * (index + 1));
+        [copyArr[index], copyArr[randomIdx]] = [
+            copyArr[randomIdx],
+            copyArr[index],
+        ];
+    }
+    return copyArr;
+};
+
+function generatePassword(maxLength, minSymbols, minNumbers) {
+    const symbolStr = generateRandomString(symbols, minSymbols);
+    const numStr = generateRandomString(numbers, minNumbers);
+    const charStr = generateRandomString(
+        alphabets,
+        maxLength - minNumbers - minSymbols
+    );
+    return Math.shuffle([
+        ...symbolStr.split(''),
+        ...numStr.split(''),
+        ...charStr.split(''),
+    ]).join('');
+}
+
 document
     .getElementById('generatePassword')
     .addEventListener('click', function handler() {
-        const length = document.getElementById('passwordLength').value;
-        document.getElementById('result').value = generateRandomString(
-            [...alphabets, ...numbers, ...specialChars],
-            Number.isNaN(length) ? 10 : length
+        const length = +document.getElementById('passwordLength').value;
+        const minSymbols = +document.getElementById('symbolLength').value;
+        const minNumbers = +document.getElementById('numberLength').value;
+        document.getElementById('result').value = generatePassword(
+            length,
+            minSymbols,
+            minNumbers
         );
     });
 
@@ -96,8 +125,11 @@ document
     .getElementById('passwordLength')
     .addEventListener('change', function handler(event) {
         const length = event.target.value;
-        document.getElementById('result').value = generateRandomString(
-            [...alphabets, ...numbers, ...specialChars],
-            Number.isNaN(length) ? 10 : length
+        const minSymbols = +document.getElementById('symbolLength').value;
+        const minNumbers = +document.getElementById('numberLength').value;
+        document.getElementById('result').value = generatePassword(
+            length,
+            minSymbols,
+            minNumbers
         );
     });
