@@ -80,5 +80,14 @@ document
 document
     .getElementById('copyToClipboard')
     .addEventListener('click', function handler() {
-        // copy to clipboard
+        const result = document.getElementById('result')
+        result.select()
+        result.setSelectionRange(0, 99999)
+        document.execCommand('copy')
+        const clipboardBtn = document.getElementById('copyToClipboard')
+        const oldClipboardValue = clipboardBtn.innerHTML
+        clipboardBtn.innerHTML = 'Copied'
+        setTimeout(function resetClipboardName() {
+            clipboardBtn.innerHTML = oldClipboardValue
+        }, 2000)
     })
