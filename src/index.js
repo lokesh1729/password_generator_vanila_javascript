@@ -76,3 +76,9 @@ document
         )
         document.getElementById('result').innerHTML = randomString
     })
+
+document
+    .getElementById('copyToClipboard')
+    .addEventListener('click', function handler() {
+        // copy to clipboard
+    })
